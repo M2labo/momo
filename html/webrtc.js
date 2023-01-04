@@ -1,5 +1,4 @@
 const remoteVideo = document.getElementById('remote_video');
-const dataTextInput = document.getElementById('data_text');
 remoteVideo.controls = true;
 let peerConnection = null;
 let dataChannel = null;
@@ -378,8 +377,8 @@ function play() {
   remoteVideo.play();
 }
 
-function sendDataChannel() {
-  let textData = dataTextInput.value;
+function sendDataChannel(data_text) {
+  let textData = data_text;
   if (textData.length == 0) {
     return;
   }
@@ -387,5 +386,4 @@ function sendDataChannel() {
     return;
   }
   dataChannel.send(new TextEncoder().encode(textData));
-  dataTextInput.value = "";
 }

@@ -1,28 +1,83 @@
-<!doctype html>
+<!DOCTYPE HTML>
+
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" href="#">
-    <title>Momo P2P</title>
-  </head>
-  <body>
-    <h3>Momo P2P</h3>
-    <div>
-      <select id="codec">
-        <option value="H264">H264</option>
-        <option value="VP8">VP8</option>
-        <option value="VP9">VP9</option>
-        <option value="AV1">AV1</option>
-      </select>
-      <input type="button" onclick="connect();" value="Connect">
-      <input type="button" onclick="disconnect();" value="Disconnect">
-      <input type="button" onclick="play();" value="Play">
-      <input type="text" id="data_text">
-      <input type="button" onclick="sendDataChannel();" value="Send">
-    </div>
-    <div>
-      <video id="remote_video" autoplay style="border: 3px solid gray;"></video>
-    </div>
-    <script type='text/javascript' src='./webrtc.js'></script>
-  </body>
+	<head>
+		<title>Joy</title>
+		<meta charset="utf-8">
+		<meta name="description" content="Example page of use pure Javascript JoyStick">
+		<meta name="author" content="Roberto D'Amico">
+		<link rel="shortcut icon" type="image/png" href="http://bobboteck.github.io/img/roberto-damico-bobboteck.png">
+		<style>
+*
+{
+	box-sizing: border-box;
+}
+body
+{
+	margin: 0px;
+	padding: 0px;
+	font-family: monospace;
+}
+.row
+{
+	display: inline-flex;
+	clear: both;
+}
+.columnLateral
+{
+  float: left;
+  width: 15%;
+  min-width: 300px;
+}
+.columnCetral
+{
+  float: left;
+  width: 70%;
+  min-width: 300px;
+}
+
+#joystick
+{
+	border: 1px solid #FF0000;
+}
+
+		</style>
+		<script src="joy.js"></script>
+	</head>
+	<body>
+		<h3>Momo P2P</h3>
+			<div>
+				<select id="codec">
+					<option value="H264">H264</option>
+					<option value="VP8">VP8</option>
+					<option value="VP9">VP9</option>
+					<option value="AV1">AV1</option>
+				</select>
+				<input type="button" onclick="connect();" value="Connect">
+				<input type="button" onclick="disconnect();" value="Disconnect">
+				<input type="button" onclick="play();" value="Play">
+				</div>
+				<div>
+				<video id="remote_video" autoplay style="border: 3px solid gray;"></video>
+			</div>
+
+		<div class="row">
+			<div class="columnLateral">
+				<div id="joy1Div" style="width:200px;height:200px;margin:50px">
+
+					<h3 style="text-align:center;" id="joy1Direzione">STOP</h3>
+				</div>
+				
+			</div>		
+		</div>
+		<script type='text/javascript' src='./webrtc.js'></script>
+		<script type="text/javascript">
+			var joy1Direzione = document.getElementById("joy1Direzione");
+			
+			var Joy1 = new JoyStick('joy1Div', {}, function(stickData) {
+				joy1Direzione.textContent = stickData.cardinalDirection
+				sendDataChannel(stickData.cardinalDirection);
+			});
+		</script>
+	</body>
 </html>
